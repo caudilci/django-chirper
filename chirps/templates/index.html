@@ -1,7 +1,13 @@
 {% if latest_chirp_list %}
     <ul>
     {% for chirp in latest_chirp_list %}
-        <li><a href="/chirp/{{ chirp.id }}/edit/">Edit</a><br/><p>{{ chirp.message }}</p></li>
+        <div>
+            <p>{{ chirp.user.username }}</p>
+            <p>{{ chirp.message }}</p>
+            <p>{{ chirp.updated_at_str() }}</p>
+            <a href="/chirps/{{ chirp.id }}/edit/">Edit</a>
+            <a href="#">Delete</a>
+        </div>
     {% endfor %}
     </ul>
 {% else %}
