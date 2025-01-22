@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.template import loader
 from .models import Chirp
@@ -7,11 +7,14 @@ from .models import Chirp
 
 def index(request):
     latest_chirp_list = Chirp.objects.order_by("-created_at")
-    template = loader.get_template("index.html")
     context = {
         "latest_chirp_list": latest_chirp_list,
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, "index.html", context)
 
 def edit(request, chirp_id):
-    return HttpResponse("Hello, world. You're at the chirps edit index.")
+    try:
+        chirp = Chirp.objects.get(pk=chirp_id)
+    except Chirp.DoesNotExist:
+        raise Http404("Chirp does not exist")
+    return HttpResponse(f'Hello, world. Edit message "{chirp.message}" ')
