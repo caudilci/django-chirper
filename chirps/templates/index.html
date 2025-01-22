@@ -1,0 +1,10 @@
+{% if latest_chirp_list %}
+    <ul>
+    {% for chirp in latest_chirp_list %}
+        <li><a href="/chirp/{{ chirp.id }}/edit/">Edit</a><br/><p>{{ chirp.message }}</p></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No chirps yet.</p>
+{% endif %}
+
